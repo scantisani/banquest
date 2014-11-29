@@ -1,0 +1,17 @@
+<head>
+  <script>
+    $(document).keypress(function(e) {
+      var key = e.which;
+
+      $.ajax({
+        type: "PATCH",
+        data: {id: 1, keypress: key},
+        dataType: 'json'
+      }).done(function(data) {
+        $('#map').text(data.map);
+      });
+    });
+  </script>
+</head>
+
+<span id="map"></span>

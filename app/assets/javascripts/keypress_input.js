@@ -1,5 +1,5 @@
 $(document).keypress(function(e) {
-	var character = e.which;
+	var keypress = e.which;
 	//temporary
-	$("span").text(character);
+	$('#key').text(keypress);
 });
