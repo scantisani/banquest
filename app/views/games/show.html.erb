@@ -5,13 +5,13 @@
 
       $.ajax({
         type: "PATCH",
-        data: {id: 1, keypress: key},
+        data: {keypress: key},
         dataType: 'json'
       }).done(function(data) {
-        $('#map').text(data.map);
+        $('#map').html(data.map);
       });
     });
   </script>
 </head>
 
-<span id="map"></span>
+<div id="map">Press any key to begin.</div>
