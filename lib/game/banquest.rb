@@ -6,10 +6,7 @@ class Banquest
   @map = Map.new
   @player = Player.new
 
-  i = @player.location[0]
-  j = @player.location[1]
+  @map.place_player(@player.location)
 
-  @map.squares[j][i] = '@'
-
-  print map.to_string
+  print @map.to_string
 end

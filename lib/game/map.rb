@@ -1,7 +1,14 @@
 # Generates the map for each game.
 class Map
   def initialize
-    @squares = Array.new(10) { Array.new(10, '.') }
+    @dungeon_squares = Array.new(10) { Array.new(10, '.') }
+    @squares = @dungeon_squares.dup
+  end
+
+  def place_player(loc)
+    i = loc[0]
+    j = loc[1]
+    squares[j][i] = '@'
   end
 
   def to_string
