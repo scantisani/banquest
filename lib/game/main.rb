@@ -20,7 +20,7 @@ class Main
     when 'l'
       @player.move('east')
     end
-    print @map.draw + "\n"
+    @map.draw
   end
 
   def save_game

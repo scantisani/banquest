@@ -21,7 +21,7 @@ class Map
           map_string += @structure[i][j]
         end
       end
-      map_string += "\n"
+      map_string += '<br>'
     end
     map_string
   end
