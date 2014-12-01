@@ -1,7 +1,9 @@
 <head>
   <script>
     $(document).keypress(function(e) {
-      var key = e.which;
+      var key = String.fromCharCode(e.which);
+      // e.which only finds character code (integer)
+      // key is a single-character string
 
       $.ajax({
         type: "PATCH",
