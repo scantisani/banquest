@@ -1,8 +1,8 @@
 # The player.
 class Player
-  def initialize
-    @x = 3
-    @y = 5
+  def initialize(x = 3, y = 5)
+    @x = x
+    @y = y
   end
 
   def move(direction)
