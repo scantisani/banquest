@@ -1,6 +1,6 @@
 require_relative 'map'
 require_relative 'player'
-# require 'io/console'
+require 'yaml'
 
 # The main game loop
 class Banquest
@@ -22,12 +22,15 @@ class Banquest
     end
     print @map.draw + "\n"
   end
+
+  def save
+    save_data = { player_x: @player.x, player_y: @player.y }
+    save_data.to_yaml
+  end
+
+  def load(data)
+    load_data = YAML.load(data)
+    @player.x = load_data[:player_x]
+    @player.y = load_data[:player_y]
+  end
 end
-
-# b = Banquest.new
-
-# key = 'a'
-# until key == 'q'
-#   key = STDIN.getch
-#   b.keypress(key)
-# end
