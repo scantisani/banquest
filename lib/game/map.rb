@@ -1,6 +1,6 @@
 # Generates the map for each game.
 class Map
-  def initialize(player)
+  def initialize(player = Player.new)
     # the dungeon
     @structure = Array.new(10) { Array.new(10, '.') }
 
