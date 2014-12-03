@@ -1,3 +1,5 @@
+require_relative 'player'
+
 # Generates the map for each game.
 class Map
   def initialize(player = Player.new)
@@ -25,6 +27,8 @@ class Map
     end
     map_string
   end
+
+  private
 
   def place_occupants
     clear_occupants
