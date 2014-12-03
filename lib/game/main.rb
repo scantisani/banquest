@@ -10,16 +10,12 @@ class Main
   end
 
   def keypress(key)
-    case key
-    when 'h'
-      @player.move('west')
-    when 'j'
-      @player.move('south')
-    when 'k'
-      @player.move('north')
-    when 'l'
-      @player.move('east')
-    end
+    direction = { h: 'west', j: 'south', k: 'north', l: 'east',
+                      y: 'northwest', u: 'northeast', b: 'southwest',
+                      n: 'southeast' }
+
+    key = key.to_sym
+    if direction.key?(key) then @player.move(direction[key]) end
     @map.draw
   end
 
