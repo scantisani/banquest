@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141201111618) do
+ActiveRecord::Schema.define(version: 20141203224639) do
 
-  create_table "games", force: true do |t|
+  create_table "runs", force: true do |t|
     t.string   "keypress"
     t.text     "map"
     t.datetime "created_at"
