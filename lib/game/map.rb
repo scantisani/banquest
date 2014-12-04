@@ -18,12 +18,12 @@ class Map
     @structure.each_index do |i|
       @structure[i].each_index do |j|
         if @occupying_dungeon[i][j] != ''
-          map_string += @occupying_dungeon[i][j]
+          map_string << @occupying_dungeon[i][j]
         else
-          map_string += @structure[i][j]
+          map_string << @structure[i][j]
         end
       end
-      map_string += '<br>'
+      map_string << '<br>'
     end
     map_string
   end
