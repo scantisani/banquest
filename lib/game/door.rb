@@ -10,15 +10,19 @@ class Door
   def place
     # generates coordinates of doors
     # arrays start at 0, so we need -1 for last value, -2 for 2nd-last value
-    if [true, false].sample(random: @generator)
+    if either(true, false)
       # east or west walls
-      @x = [0, @room_width - 1].sample(random: @generator)
+      @x = either(0, @room_width - 1)
       @y = @generator.rand(1..@room_length - 2) # we don't want doors in corners
     else
       # north or south walls
       @x = @generator.rand(1..@room_width - 2) # we don't want doors in corners
-      @y = [0, @room_length - 1].sample(random: @generator)
+      @y = either(0, @room_length - 1)
     end
+  end
+
+  def either(first, second)
+    [first, second].sample(random: @generator)
   end
 
   attr_accessor :x
