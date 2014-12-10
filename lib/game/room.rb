@@ -9,7 +9,7 @@ class Room
     @width = @rng.rand(4..12) # x-axis
     @origin = { x: 0, y: 0 }
 
-    @plan = Array.new(@length) { Array.new(@width, Floor.new) }
+    @plan = Array.new(@length) { Array.new(@width) { Floor.new } }
   end
 
   attr_reader :plan
