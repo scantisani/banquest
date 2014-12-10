@@ -11,9 +11,9 @@ class Main
   end
 
   def keypress(key)
-    direction = { h: 'west', j: 'south', k: 'north', l: 'east',
-                  y: 'northwest', u: 'northeast', b: 'southwest',
-                  n: 'southeast' }
+    direction = { h: :west, j: :south, k: :north, l: :east,
+                  y: :northwest, u: :northeast, b: :southwest,
+                  n: :southeast }
 
     key = key.to_sym
     @player.move(direction[key]) if direction.key?(key)

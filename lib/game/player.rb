@@ -13,8 +13,6 @@ class Player
       northwest: [-1, -1]
     }
 
-    direction = direction.to_sym
-
     @x += compass[direction][0] # x-axis movement
     @y += compass[direction][1] # y-axis movement
   end
