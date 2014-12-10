@@ -4,7 +4,7 @@ require_relative 'wall'
 
 # Generates the map for each game.
 class Map
-  MAP_SIZE = 50
+  MAP_SIZE = 40
 
   def initialize(seed)
     @rng = Random.new(seed)

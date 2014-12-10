@@ -4,7 +4,7 @@ require 'yaml'
 
 # The main game loop
 class Main
-  def initialize(seed = Random.new.rand(9999))
+  def initialize(seed = Random.rand(9999))
     @seed = seed
     @player = Player.new
     @map = PopulatedMap.new(@player, @seed)

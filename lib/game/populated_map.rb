@@ -3,7 +3,7 @@ require_relative 'player'
 
 # The dungeon map occupied by the player as well as monsters.
 class PopulatedMap
-  MAP_SIZE = 50
+  MAP_SIZE = 40
   def initialize(player, seed)
     @rng = Random.new(seed)
 

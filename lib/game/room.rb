@@ -5,8 +5,8 @@ class Room
   def initialize(seed)
     @rng = Random.new(seed)
 
-    @length = @rng.rand(4..12) # y-axis
-    @width = @rng.rand(4..12) # x-axis
+    @length = @rng.rand(4..10) # y-axis
+    @width = @rng.rand(4..10) # x-axis
     @origin = { x: 0, y: 0 }
 
     @plan = Array.new(@length) { Array.new(@width) { Floor.new } }
