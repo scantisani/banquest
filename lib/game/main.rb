@@ -25,7 +25,8 @@ class Main
   end
 
   def save_game
-    data = { player_x: @player.x, player_y: @player.y, seed: @seed }
+    data = { player_x: @player.x, player_y: @player.y, seed: @seed,
+             seen_squares: @map.save_seen }
     data.to_yaml
   end
 
@@ -35,5 +36,6 @@ class Main
     @player.y = loaded_data[:player_y]
     @seed = loaded_data[:seed]
     @map = PopulatedMap.new(@player, @seed)
+    @map.load_seen(loaded_data[:seen_squares])
   end
 end

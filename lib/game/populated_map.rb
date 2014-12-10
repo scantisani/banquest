@@ -20,6 +20,22 @@ class PopulatedMap
     @map[clone.y][clone.x].is_a? Floor
   end
 
+  def save_seen
+    seen_squares = []
+    @map.each_with_index do |row, y|
+      row.each_with_index do |square, x|
+        seen_squares << [x, y] if square.seen
+      end
+    end
+    seen_squares
+  end
+
+  def load_seen(seen_squares)
+    seen_squares.each do |coordinates|
+      @map[coordinates[1]][coordinates[0]].mark_seen
+    end
+  end
+
   def redraw
     # clear occupants
     @map.each do |row|

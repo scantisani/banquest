@@ -49,8 +49,8 @@ class Map
     # TODO: add detection for collisions?
     x = y = 3
     until @structure[y][x].is_a? Wall
-      x = @rng.rand(1..MAP_SIZE - 3 - width)
-      y = @rng.rand(1..MAP_SIZE - 3 - length)
+      x = @rng.rand(3..MAP_SIZE - 3 - width)
+      y = @rng.rand(3..MAP_SIZE - 3 - length)
     end
     { x: x, y: y }
   end
