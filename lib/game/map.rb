@@ -6,20 +6,14 @@ require_relative 'wall'
 class Map
   MAP_SIZE = 50
 
-  def initialize(
-    # player = Player.new,
-    seed)
+  def initialize(seed)
     @rng = Random.new(seed)
-    # the dungeon
-    @structure = Array.new(MAP_SIZE) { Array.new(MAP_SIZE, Wall.new) }
+    @structure = Array.new(MAP_SIZE) { Array.new(MAP_SIZE) { Wall.new } }
     @rooms = []
-
     generate
-
-    # things in the dungeon
-    # @occupying_dungeon = Array.new(10) { Array.new(10, '') }
-    # @player = player
   end
+
+  attr_accessor :structure
 
   def to_string
     rows = @structure.collect { |row| row.collect(&:symbol).join }
@@ -99,14 +93,5 @@ class Map
     x = room.origin[:x] + @rng.rand(0..room.width - 1)
     y = room.origin[:y] + @rng.rand(0..room.length - 1)
     { x: x, y: y }
-  end
-
-  def place_occupants
-    clear_occupants
-    @occupying_dungeon[@player.y][@player.x] = '@'
-  end
-
-  def clear_occupants
-    @occupying_dungeon = Array.new(10) { Array.new(10, '') }
   end
 end

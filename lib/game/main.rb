@@ -1,4 +1,4 @@
-require_relative 'map'
+require_relative 'populated_map'
 require_relative 'player'
 require 'yaml'
 
@@ -6,17 +6,18 @@ require 'yaml'
 class Main
   def initialize
     @player = Player.new
-    @map = Map.new(@player)
+    @map = PopulatedMap.new(@player, Random.new.rand(9999))
   end
 
   def keypress(key)
     direction = { h: 'west', j: 'south', k: 'north', l: 'east',
-                      y: 'northwest', u: 'northeast', b: 'southwest',
-                      n: 'southeast' }
+                  y: 'northwest', u: 'northeast', b: 'southwest',
+                  n: 'southeast' }
 
     key = key.to_sym
-    if direction.key?(key) then @player.move(direction[key]) end
-    @map.draw
+    @player.move(direction[key]) if direction.key?(key)
+    @map.redraw
+    @map.to_html
   end
 
   def save_game
