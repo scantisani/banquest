@@ -1,8 +1,9 @@
 # The player.
 class Player
-  def initialize(x = 3, y = 5)
+  def initialize(x = 0, y = 0)
     @x = x
     @y = y
+    @symbol = '@'
   end
 
   def move(direction)
@@ -20,4 +21,5 @@ class Player
 
   attr_accessor :x
   attr_accessor :y
+  attr_reader :symbol
 end
