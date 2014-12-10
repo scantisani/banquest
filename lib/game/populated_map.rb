@@ -7,10 +7,16 @@ class PopulatedMap
   def initialize(player, seed)
     @rng = Random.new(seed)
 
-    @map = Map.new(@rng.rand(9999)).structure
+    @map = Map.new(seed).structure
     @actors = [player]
 
     populate
+  end
+
+  def valid_movement(direction, actor)
+    clone = actor.clone
+    clone.move(direction)
+    @map[clone.y][clone.x].is_a? Floor
   end
 
   def redraw
