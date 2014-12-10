@@ -8,7 +8,8 @@ class PopulatedMap
     @rng = Random.new(seed)
 
     @map = Map.new(seed).structure
-    @actors = [player]
+    @player = player
+    @actors = [@player]
 
     populate
   end
@@ -26,6 +27,7 @@ class PopulatedMap
     end
     # place occupants
     @actors.each { |actor| place(actor) }
+    mark_seen
   end
 
   def to_string
@@ -53,5 +55,13 @@ class PopulatedMap
 
   def place(actor)
     @map[actor.y][actor.x].occupy(actor)
+  end
+
+  def mark_seen
+    @map[@player.y - 3..@player.y + 3].each do |row|
+      row[@player.x - 3..@player.x + 3].each do |square|
+        square.mark_seen
+      end
+    end
   end
 end

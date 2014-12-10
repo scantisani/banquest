@@ -4,7 +4,8 @@ require_relative 'square'
 class Floor < Square
   def initialize
     @character = '.'
-    @symbol = @character
+    @symbol = '`'
+    @seen = false
     @occupant = nil
   end
 
@@ -12,6 +13,11 @@ class Floor < Square
 
   def occupy(actor)
     @occupant = actor
-    actor ? @symbol = actor.symbol : @symbol = @character
+    @symbol = actor.symbol if actor
+  end
+
+  def mark_seen
+    @seen = true
+    @symbol = @character unless occupant
   end
 end

@@ -47,10 +47,10 @@ class Map
 
   def new_origin(length, width)
     # TODO: add detection for collisions?
-    x = y = 1
+    x = y = 3
     until @structure[y][x].is_a? Wall
-      x = @rng.rand(1..MAP_SIZE - 1 - width)
-      y = @rng.rand(1..MAP_SIZE - 1 - length)
+      x = @rng.rand(1..MAP_SIZE - 3 - width)
+      y = @rng.rand(1..MAP_SIZE - 3 - length)
     end
     { x: x, y: y }
   end
