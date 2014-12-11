@@ -56,16 +56,15 @@ class Map
   end
 
   def connect_rooms
-    unconnected_rooms = @rooms.clone
-    connected_rooms = [@rooms[1..-1].sample(random: @rng)]
+    connected_rooms = [@rooms[-1]]
+    unconnected_rooms = @rooms[0..-2]
 
     until unconnected_rooms.empty?
       unconnected_rooms.each do |room|
-        other_rooms = connected_rooms.reject { |x| x == room }
-        close_room = closest_room(room, other_rooms)
+        close_room = closest_room(room, connected_rooms)
 
         make_corridor(room, close_room)
-        unconnected_rooms.reject! { |x| x == room || x == close_room }
+        unconnected_rooms.reject! { |x| x == room }
       end
     end
   end
