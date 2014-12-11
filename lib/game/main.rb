@@ -1,6 +1,6 @@
 require_relative 'populated_map'
 require_relative 'player'
-require 'yaml'
+require 'json'
 
 # The main game loop
 class Main
@@ -27,15 +27,15 @@ class Main
   def save_game
     data = { player_x: @player.x, player_y: @player.y, seed: @seed,
              seen_squares: @map.save_seen }
-    data.to_yaml
+    data.to_json
   end
 
   def load_game(data)
-    loaded_data = YAML.load(data)
-    @player.x = loaded_data[:player_x]
-    @player.y = loaded_data[:player_y]
-    @seed = loaded_data[:seed]
+    loaded_data = JSON.parse(data)
+    @player.x = loaded_data['player_x']
+    @player.y = loaded_data['player_y']
+    @seed = loaded_data['seed']
     @map = PopulatedMap.new(@player, @seed)
-    @map.load_seen(loaded_data[:seen_squares])
+    @map.load_seen(loaded_data['seen_squares'])
   end
 end
