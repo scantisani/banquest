@@ -13,7 +13,12 @@ class Floor < Square
 
   def occupy(actor)
     @occupant = actor
-    @symbol = actor.symbol if actor
+    if actor
+      @symbol = actor.symbol
+      mark_seen
+    else
+      seen ? @symbol = @character : @symbol = ' '
+    end
   end
 
   def mark_seen
