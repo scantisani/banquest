@@ -4,6 +4,10 @@ class Actor
     @x = x
     @y = y
     @symbol = ''
+
+    @alive = true
+    @hit_points = 1
+    @damage_range = 0..0
   end
 
   attr_accessor :x
@@ -18,5 +22,15 @@ class Actor
     }
     @x += compass[direction][0] # x-axis movement
     @y += compass[direction][1] # y-axis movement
+  end
+
+  def attack(actor)
+    damage = Random.rand(@damage_range)
+    actor.take_damage(damage)
+  end
+
+  def take_damage(damage)
+    @hit_points -= damage
+    @alive = false if @hit_points <= 0
   end
 end
