@@ -53,7 +53,8 @@ class PopulatedMap
 
   def to_html
     rows = @map.collect { |row| row.collect(&:symbol).join }
-    rows.join('<br>')
+    html = rows.join('<br>')
+    html.gsub(' ', '&nbsp;')
   end
 
   private

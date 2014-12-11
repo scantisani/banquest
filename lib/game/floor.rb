@@ -4,7 +4,7 @@ require_relative 'square'
 class Floor < Square
   def initialize
     @character = '.'
-    @symbol = '`'
+    @symbol = ' '
     @seen = false
     @occupant = nil
   end

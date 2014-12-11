@@ -4,7 +4,7 @@ require_relative 'square'
 class Wall < Square
   def initialize
     @character = '#'
-    @symbol = '`'
+    @symbol = ' '
     @seen = false
   end
 end

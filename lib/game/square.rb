@@ -1,8 +1,8 @@
 # A single square of the dungeon
 class Square
   def initialize
-    @character = '`'
-    @symbol = '`'
+    @character = ' '
+    @symbol = ' '
     @seen = false
   end
 
