@@ -5,8 +5,8 @@ require_relative '../lib/game/populated_map.rb'
 # Unit tests for actor.rb
 class ActorTest < Test::Unit::TestCase
   def setup
-    map = PopulatedMap.new(Random.rand(9999))
-    @control = Actor.new(map, 4, 4)
+    @map = PopulatedMap.new(Random.rand(9999))
+    @control = Actor.new(@map, 4, 4)
     @a = []
     14.times { @a.push(@control.clone) }
   end
@@ -80,7 +80,7 @@ class ActorTest < Test::Unit::TestCase
   end
 
   def test_init
-    initialized_actor = Actor.new(PopulatedMap.new(Random.rand(9999)), 5, 5)
+    initialized_actor = Actor.new(@map, 5, 5)
     assert_equal(5, initialized_actor.x)
     assert_equal(5, initialized_actor.y)
   end
@@ -99,5 +99,13 @@ class ActorTest < Test::Unit::TestCase
     adjacent_actors.each do |actor|
       assert(actor.next_to(@control))
     end
+  end
+
+  def test_sees_adjacent
+    seer = @control.clone
+    x_range = seer.x - 1..seer.x + 1
+    y_range = seer.y - 1..seer.y + 1
+
+    y_range.each { |y| x_range.each { |x| assert(seer.sees({ x: x, y: y })) } }
   end
 end
