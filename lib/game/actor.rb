@@ -39,4 +39,9 @@ class Actor
     @hit_points -= damage
     @alive = false if @hit_points <= 0
   end
+
+  def next_to(actor)
+    @x == actor.x - 1 || @x == actor.x + 1 ||
+      @y == actor.y - 1 || @y == actor.y + 1
+  end
 end

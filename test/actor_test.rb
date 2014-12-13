@@ -1,12 +1,14 @@
 require 'test/unit'
 require_relative '../lib/game/actor.rb'
+require_relative '../lib/game/populated_map.rb'
 
 # Unit tests for actor.rb
 class ActorTest < Test::Unit::TestCase
   def setup
+    map = PopulatedMap.new(Random.rand(9999))
+    @control = Actor.new(4, 4, map)
     @a = []
-    14.times { @a.push(Actor.new(4, 4)) }
-    @control = Actor.new(4, 4)
+    14.times { @a.push(@control.clone) }
   end
 
   def test_square
@@ -78,8 +80,21 @@ class ActorTest < Test::Unit::TestCase
   end
 
   def test_init
-    initialized_actor = Actor.new(5, 5)
+    initialized_actor = Actor.new(5, 5, PopulatedMap.new(Random.rand(9999)))
     assert_equal(5, initialized_actor.x)
     assert_equal(5, initialized_actor.y)
+  end
+
+  def test_next_to
+    adjacent_actors = Array.new(8) { @control.clone }
+    adjacent_actors[0].move(:east)
+    adjacent_actors[1].move(:west)
+    adjacent_actors[2].move(:south)
+    adjacent_actors[3].move(:north)
+    adjacent_actors[4].move(:northeast)
+    adjacent_actors[5].move(:northwest)
+    adjacent_actors[6].move(:southeast)
+    adjacent_actors[7].move(:southwest)
+    adjacent_actors.each { |actor| assert(actor.next_to(@control)) }
   end
 end
