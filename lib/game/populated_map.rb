@@ -7,10 +7,12 @@ class PopulatedMap
   def initialize(seed)
     @rng = Random.new(seed)
 
-    @map = Map.new(seed).structure
+    @structure = Map.new(seed).structure
     @player = nil
     @actors = []
   end
+
+  attr_accessor :structure
 
   def add_actor(actor)
     @actors << actor
@@ -19,12 +21,12 @@ class PopulatedMap
   end
 
   def floor?(position)
-    @map[position[:y]][position[:x]].is_a? Floor
+    @structure[position[:y]][position[:x]].is_a? Floor
   end
 
   def save_seen
     seen_squares = []
-    @map.each_with_index do |row, y|
+    @structure.each_with_index do |row, y|
       row.each_with_index do |square, x|
         seen_squares << [x, y] if square.seen
       end
@@ -34,13 +36,13 @@ class PopulatedMap
 
   def load_seen(seen_squares)
     seen_squares.each do |coordinates|
-      @map[coordinates[1]][coordinates[0]].mark_seen
+      @structure[coordinates[1]][coordinates[0]].mark_seen
     end
   end
 
   def redraw
     # clear occupants
-    @map.each do |row|
+    @structure.each do |row|
       row.each { |square| square.occupy(nil) if square.is_a? Floor }
     end
     # place occupants
@@ -49,12 +51,12 @@ class PopulatedMap
   end
 
   def to_string
-    rows = @map.collect { |row| row.collect(&:symbol).join }
+    rows = @structure.collect { |row| row.collect(&:symbol).join }
     rows.join("\n")
   end
 
   def to_html
-    rows = @map.collect { |row| row.collect(&:symbol).join }
+    rows = @structure.collect { |row| row.collect(&:symbol).join }
     html = rows.join('<br>')
     html.gsub(' ', '&nbsp;')
   end
@@ -63,7 +65,7 @@ class PopulatedMap
 
   def give_starting_position(actor)
     x, y = actor.x, actor.y
-    until @map[y][x].is_a? Floor
+    until @structure[y][x].is_a? Floor
       x, y = @rng.rand(1..MAP_SIZE - 1), @rng.rand(1..MAP_SIZE - 1)
     end
     actor.x, actor.y = x, y
@@ -71,11 +73,11 @@ class PopulatedMap
   end
 
   def place(actor)
-    @map[actor.y][actor.x].occupy(actor)
+    @structure[actor.y][actor.x].occupy(actor)
   end
 
   def mark_seen
-    @map[@player.y - 3..@player.y + 3].each do |row|
+    @structure[@player.y - 3..@player.y + 3].each do |row|
       row[@player.x - 3..@player.x + 3].each(&:mark_seen)
     end
   end
