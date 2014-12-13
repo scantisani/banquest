@@ -1,9 +1,11 @@
 # The player or a monster
 class Actor
-  def initialize(x = 0, y = 0)
+  def initialize(map, x = 0, y = 0)
     @x = x
     @y = y
     @symbol = ''
+    @map = map
+    @map.add_actor(self)
 
     @alive = true
     @hit_points = 1
@@ -15,13 +17,17 @@ class Actor
   attr_reader :symbol
 
   def move(direction)
+    position = potential_move(direction)
+    @x, @y = position[:x], position[:y] if @map.floor?(position)
+  end
+
+  def potential_move(direction)
     compass = {
       north: [0, -1], east: [1, 0], south: [0, 1], west: [-1, 0],
       northeast: [1, -1], southeast: [1, 1], southwest: [-1, 1],
       northwest: [-1, -1]
     }
-    @x += compass[direction][0] # x-axis movement
-    @y += compass[direction][1] # y-axis movement
+    { x: @x + compass[direction][0], y: @y + compass[direction][1] }
   end
 
   def attack(actor)

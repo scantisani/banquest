@@ -6,8 +6,8 @@ require 'json'
 class Main
   def initialize(seed = Random.rand(9999))
     @seed = seed
-    @player = Player.new
-    @map = PopulatedMap.new(@player, @seed)
+    @map = PopulatedMap.new(@seed)
+    @player = Player.new(@map)
   end
 
   def keypress(key)
@@ -16,9 +16,7 @@ class Main
                    n: :southeast }
 
     direction = directions[key.to_sym]
-    if direction
-      @player.move(direction) if @map.valid_movement(direction, @player)
-    end
+    @player.move(direction) if direction
 
     @map.redraw
     @map.to_html
@@ -32,10 +30,11 @@ class Main
 
   def load_game(data)
     loaded_data = JSON.parse(data)
+    @seed = loaded_data['seed']
+    @map = PopulatedMap.new(@seed)
+    @map.load_seen(loaded_data['seen_squares'])
+    @player = Player.new(@map)
     @player.x = loaded_data['player_x']
     @player.y = loaded_data['player_y']
-    @seed = loaded_data['seed']
-    @map = PopulatedMap.new(@player, @seed)
-    @map.load_seen(loaded_data['seen_squares'])
   end
 end

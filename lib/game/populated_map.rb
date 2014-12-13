@@ -4,21 +4,22 @@ require_relative 'player'
 # The dungeon map occupied by the player as well as monsters.
 class PopulatedMap
   MAP_SIZE = 40
-  def initialize(player, seed)
+  def initialize(seed)
     @rng = Random.new(seed)
 
     @map = Map.new(seed).structure
-    @player = player
-    @actors = [@player]
-
-    populate
-    mark_seen
+    @player = nil
+    @actors = []
   end
 
-  def valid_movement(direction, actor)
-    clone = actor.clone
-    clone.move(direction)
-    @map[clone.y][clone.x].is_a? Floor
+  def add_actor(actor)
+    @actors << actor
+    @player = actor if actor.is_a? Player
+    give_starting_position(actor)
+  end
+
+  def floor?(position)
+    @map[position[:y]][position[:x]].is_a? Floor
   end
 
   def save_seen
@@ -60,15 +61,13 @@ class PopulatedMap
 
   private
 
-  def populate
-    @actors.each do |actor|
-      x, y = actor.x, actor.y
-      until @map[y][x].is_a? Floor
-        x, y = @rng.rand(1..MAP_SIZE - 1), @rng.rand(1..MAP_SIZE - 1)
-      end
-      actor.x, actor.y = x, y
-      place(actor)
+  def give_starting_position(actor)
+    x, y = actor.x, actor.y
+    until @map[y][x].is_a? Floor
+      x, y = @rng.rand(1..MAP_SIZE - 1), @rng.rand(1..MAP_SIZE - 1)
     end
+    actor.x, actor.y = x, y
+    place(actor)
   end
 
   def place(actor)
@@ -77,9 +76,7 @@ class PopulatedMap
 
   def mark_seen
     @map[@player.y - 3..@player.y + 3].each do |row|
-      row[@player.x - 3..@player.x + 3].each do |square|
-        square.mark_seen
-      end
+      row[@player.x - 3..@player.x + 3].each(&:mark_seen)
     end
   end
 end
