@@ -45,7 +45,7 @@ class PopulatedMap
     end
     # place occupants
     @actors.each { |actor| place(actor) }
-    mark_seen
+    mark_seen if @player
   end
 
   def to_string

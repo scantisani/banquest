@@ -14,7 +14,7 @@ class Floor < Square
     @occupant = actor
     if actor
       @symbol = actor.symbol
-      mark_seen
+      mark_seen if actor.is_a? Player
     else
       seen ? @symbol = @character : @symbol = ' '
     end
