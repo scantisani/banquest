@@ -12,6 +12,7 @@ class PopulatedMap
     @actors = [@player]
 
     populate
+    mark_seen
   end
 
   def valid_movement(direction, actor)
