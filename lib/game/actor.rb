@@ -18,7 +18,7 @@ class Actor
 
   def move(direction)
     position = potential_move(direction)
-    @x, @y = position[:x], position[:y] if @map.floor?(position)
+    @x, @y = position[:x], position[:y]
   end
 
   def potential_move(direction)
@@ -27,7 +27,8 @@ class Actor
       northeast: [1, -1], southeast: [1, 1], southwest: [-1, 1],
       northwest: [-1, -1]
     }
-    { x: @x + compass[direction][0], y: @y + compass[direction][1] }
+    position = { x: @x + compass[direction][0], y: @y + compass[direction][1] }
+    return position if @map.floor?(position)
   end
 
   def attack(actor)
@@ -41,7 +42,8 @@ class Actor
   end
 
   def next_to(actor)
-    @x == actor.x - 1 || @x == actor.x + 1 ||
-      @y == actor.y - 1 || @y == actor.y + 1
+    column = (actor.x - 1..actor.x + 1).include? @x
+    row    = (actor.y - 1..actor.y + 1).include? @y
+    row && column
   end
 end

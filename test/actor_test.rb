@@ -6,7 +6,7 @@ require_relative '../lib/game/populated_map.rb'
 class ActorTest < Test::Unit::TestCase
   def setup
     map = PopulatedMap.new(Random.rand(9999))
-    @control = Actor.new(4, 4, map)
+    @control = Actor.new(map, 4, 4)
     @a = []
     14.times { @a.push(@control.clone) }
   end
@@ -80,7 +80,7 @@ class ActorTest < Test::Unit::TestCase
   end
 
   def test_init
-    initialized_actor = Actor.new(5, 5, PopulatedMap.new(Random.rand(9999)))
+    initialized_actor = Actor.new(PopulatedMap.new(Random.rand(9999)), 5, 5)
     assert_equal(5, initialized_actor.x)
     assert_equal(5, initialized_actor.y)
   end
@@ -95,6 +95,9 @@ class ActorTest < Test::Unit::TestCase
     adjacent_actors[5].move(:northwest)
     adjacent_actors[6].move(:southeast)
     adjacent_actors[7].move(:southwest)
-    adjacent_actors.each { |actor| assert(actor.next_to(@control)) }
+
+    adjacent_actors.each do |actor|
+      assert(actor.next_to(@control))
+    end
   end
 end
