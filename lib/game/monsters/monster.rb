@@ -1,5 +1,4 @@
 require_relative '../actor'
-require_relative '../populated_map'
 
 # Inhabitants of the dungeon that attack the player
 class Monster < Actor
@@ -17,13 +16,10 @@ class Monster < Actor
     end
 
     best_direction = valid_directions.min_by do |direction|
-      euclidean_distance(potential_move(direction), actor)
+      position = potential_move(direction)
+      euclidean_distance(position[:x], position[:y], actor.x, actor.y)
     end
 
     move(best_direction)
-  end
-
-  def euclidean_distance(position, actor)
-    Math.sqrt((position[:x] - actor.x)**2 + (position[:y] - actor.y)**2)
   end
 end
