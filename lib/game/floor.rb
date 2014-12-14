@@ -13,7 +13,6 @@ class Floor < Square
   def occupy(actor)
     @occupant = actor
     if actor
-      @symbol = actor.symbol
       mark_seen if actor.is_a? Player
     else
       seen ? @symbol = @character : @symbol = ' '
@@ -22,6 +21,7 @@ class Floor < Square
 
   def mark_seen
     @seen = true
-    @symbol = @character unless occupant
+    return @symbol = @character unless occupant
+    @symbol = @occupant.symbol
   end
 end
