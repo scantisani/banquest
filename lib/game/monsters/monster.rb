@@ -4,10 +4,20 @@ require_relative '../actor'
 class Monster < Actor
   def initialize(map, x = 0, y = 0)
     super
+    @player = map.player
   end
 
+  def take_turn
+    if next_to(@player)
+      attack(@player)
+    else
+      sees({ x: @player.x, y: @player.y }) ? approach(@player) : wander
+    end
+  end
+
+  private
+
   def approach(actor)
-    return if next_to(actor)
     directions = [:north, :east, :south, :west,
                   :northeast, :southeast, :southwest, :northwest]
 
@@ -21,5 +31,11 @@ class Monster < Actor
     end
 
     move(best_direction)
+  end
+
+  def wander
+    directions = [:north, :east, :south, :west,
+                  :northeast, :southeast, :southwest, :northwest]
+    move(directions.sample)
   end
 end
