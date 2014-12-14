@@ -16,10 +16,11 @@ class Actor
   attr_accessor :x
   attr_accessor :y
   attr_reader :symbol
+  attr_reader :hit_points
 
   def move(direction)
     position = potential_move(direction)
-    @x, @y = position[:x], position[:y]
+    @x, @y = position[:x], position[:y] if position
   end
 
   def potential_move(direction)
