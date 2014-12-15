@@ -5,7 +5,6 @@ class Actor
     @y = y
     @symbol = ''
     @map = map
-    @map.add_actor(self)
 
     @alive = true
     @hit_points = 1

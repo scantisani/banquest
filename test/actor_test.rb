@@ -7,8 +7,9 @@ class ActorTest < Test::Unit::TestCase
   def setup
     @map = PopulatedMap.new(Random.rand(9999))
     @control = Actor.new(@map, 4, 4)
-    @a = []
-    14.times { @a.push(@control.clone) }
+    @map.add_actor(@control)
+    @a = Array.new(14) { @control.clone }
+    @a.each { |actor| @map.add_actor(actor) }
   end
 
   def test_square
