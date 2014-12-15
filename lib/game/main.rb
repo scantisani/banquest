@@ -1,5 +1,6 @@
 require_relative 'populated_map'
 require_relative 'player'
+require_relative 'monster_generator'
 require 'json'
 
 # The main game loop
@@ -8,6 +9,7 @@ class Main
     @seed = seed
     @map = PopulatedMap.new(@seed)
     @player = Player.new(@map)
+    @monsters = MonsterGenerator.new(@map, 3).monsters
   end
 
   def keypress(key)
@@ -18,6 +20,7 @@ class Main
     direction = directions[key.to_sym]
     @player.move(direction) if direction
 
+    @monsters.each(&:take_turn)
     @map.redraw
     @map.to_html
   end
