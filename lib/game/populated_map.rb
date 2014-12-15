@@ -15,6 +15,7 @@ class PopulatedMap
 
   attr_accessor :structure
   attr_reader :player
+  attr_reader :actors
 
   def add_actor(actor)
     @actors << actor

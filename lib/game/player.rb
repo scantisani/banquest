@@ -8,4 +8,14 @@ class Player < Actor
     @damage_range = 1..6
     map.add_actor(self)
   end
+
+  def attack(actor)
+    super
+    messages = ["You gnaw away at the #{actor.name}!",
+                "You chomp down on the #{actor.name}!",
+                "You bite the #{actor.name}!",
+                "You chew on the #{actor.name}.",
+                "You nibble on the #{actor.name}."]
+    @combat_message = messages.sample
+  end
 end

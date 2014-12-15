@@ -5,6 +5,8 @@ class Actor
     @y = data[:y]
     @symbol = ''
     @map = map
+    @name = ''
+    @combat_message = nil
 
     @alive = true
     @hit_points = data[:hit_points]
@@ -16,6 +18,8 @@ class Actor
   attr_accessor :y
   attr_reader :symbol
   attr_reader :hit_points
+  attr_reader :name
+  attr_reader :combat_message
 
   def move(direction)
     position = potential_move(direction)

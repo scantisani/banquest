@@ -7,5 +7,14 @@ class FruitBat < Monster
     @symbol = 'b'
     @damage_range = 1..3
     @sight = 4
+    @name = 'fruit bat'
+  end
+
+  def attack(actor)
+    super
+    messages = ['The fruit bat squirts juice in your eyes!',
+                'The fruit bat drops an apple on your head!',
+                'The fruit bat pokes at you with its stem!']
+    @combat_message = messages.sample
   end
 end
