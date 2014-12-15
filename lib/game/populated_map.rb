@@ -4,12 +4,13 @@ require_relative 'player'
 # The dungeon map occupied by the player as well as monsters.
 class PopulatedMap
   MAP_SIZE = 40
-  def initialize(seed)
+  def initialize(seed, seen_squares = [])
     @rng = Random.new(seed)
 
     @structure = Map.new(seed).structure
     @player = nil
     @actors = []
+    load_seen(seen_squares) unless seen_squares.empty?
   end
 
   attr_accessor :structure

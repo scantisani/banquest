@@ -2,6 +2,7 @@ require_relative 'populated_map'
 require_relative 'player'
 require_relative 'monster_generator'
 require 'json'
+require 'active_support/core_ext/hash'
 
 # The main game loop
 class Main
@@ -26,18 +27,15 @@ class Main
   end
 
   def save_game
-    data = { player_x: @player.x, player_y: @player.y, seed: @seed,
+    data = { player_data: @player.save_data, seed: @seed,
              seen_squares: @map.save_seen }
     data.to_json
   end
 
   def load_game(data)
-    loaded_data = JSON.parse(data)
-    @seed = loaded_data['seed']
-    @map = PopulatedMap.new(@seed)
-    @map.load_seen(loaded_data['seen_squares'])
-    @player = Player.new(@map)
-    @player.x = loaded_data['player_x']
-    @player.y = loaded_data['player_y']
+    data = JSON.parse(data).deep_symbolize_keys! # JSON-parsed keys are strings
+    @seed = data[:seed]
+    @map = PopulatedMap.new(@seed, data[:seen_squares])
+    @player = Player.new(@map, data[:player_data])
   end
 end

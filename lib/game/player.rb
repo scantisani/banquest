@@ -2,7 +2,7 @@ require_relative 'actor'
 
 # The player
 class Player < Actor
-  def initialize(map, x = 0, y = 0)
+  def initialize(map, data = { x: 0, y: 0, hit_points: 20 })
     super
     @symbol = '@'
     @hit_points = 20

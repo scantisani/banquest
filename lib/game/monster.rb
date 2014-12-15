@@ -2,7 +2,7 @@ require_relative 'actor'
 
 # Inhabitants of the dungeon that attack the player
 class Monster < Actor
-  def initialize(map, x = 0, y = 0)
+  def initialize(map, data = { x: 0, y: 0, hit_points: 1 })
     super
     @player = map.player
   end

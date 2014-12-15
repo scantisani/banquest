@@ -1,13 +1,13 @@
 # The player or a monster
 class Actor
-  def initialize(map, x = 0, y = 0)
-    @x = x
-    @y = y
+  def initialize(map, data = { x: 0, y: 0, hit_points: 1 })
+    @x = data[:x]
+    @y = data[:y]
     @symbol = ''
     @map = map
 
     @alive = true
-    @hit_points = 1
+    @hit_points = data[:hit_points]
     @damage_range = 0..0
     @sight = 4
   end
@@ -57,6 +57,15 @@ class Actor
       return false if square.is_a? Wall
     end
     true
+  end
+
+  def save_data
+    { x: @x, y: @y, hit_points: @hit_points }
+  end
+
+  def load_data(data)
+    @x, @y = data['x'], data['y']
+    @hit_points = data['hit_points']
   end
 
   private
