@@ -1,4 +1,4 @@
-require_relative '../actor'
+require_relative 'actor'
 
 # Inhabitants of the dungeon that attack the player
 class Monster < Actor
