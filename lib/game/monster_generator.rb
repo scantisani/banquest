@@ -1,4 +1,5 @@
-Dir.glob('monsters/*.rb').each { |file| require_relative file }
+current_dir = File.expand_path(File.dirname(__FILE__))
+Dir.glob(current_dir + '/monsters/*.rb').each { |file| require file }
 
 # Generates a set of monsters of random types
 class MonsterGenerator
