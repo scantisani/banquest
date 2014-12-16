@@ -5,5 +5,6 @@ class Coin < Item
   def initialize(quantity = 1)
     @name = 'chocolate coin'
     @quantity = quantity
+    @symbol = '*'
   end
 end

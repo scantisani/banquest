@@ -6,6 +6,7 @@ class Floor < Square
     super
     @character = '.'
     @occupant = nil
+    @item = nil
   end
 
   attr_reader :occupant
@@ -27,5 +28,15 @@ class Floor < Square
 
   def occupied?
     !occupant.nil?
+  end
+
+  def add_item(item)
+    @item = item
+    seen ? @symbol = @item.symbol : @symbol = ' '
+  end
+
+  def remove_item
+    @item = nil
+    seen ? @symbol = @character : @symbol = ' '
   end
 end
