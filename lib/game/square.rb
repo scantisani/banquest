@@ -2,15 +2,13 @@
 class Square
   def initialize
     @character = ' '
-    @symbol = ' '
     @seen = false
   end
 
-  attr_reader :symbol
   attr_accessor :seen
 
-  def mark_seen
-    @seen = true
-    @symbol = @character
+  def symbol
+    return ' ' unless @seen
+    @character
   end
 end

@@ -39,15 +39,16 @@ class PopulatedMap
 
   def load_seen(seen_squares)
     seen_squares.each do |coordinates|
-      @structure[coordinates[1]][coordinates[0]].mark_seen
+      @structure[coordinates[1]][coordinates[0]].seen = true
     end
   end
 
   def redraw
     # clear occupants
     @structure.each do |row|
-      row.each { |square| square.occupy(nil) if square.is_a? Floor }
+      row.each { |square| square.occupant = nil if square.is_a? Floor }
     end
+    remove_dead
     # place occupants
     @actors.each { |actor| place(actor) }
     mark_seen if @player
@@ -81,7 +82,7 @@ class PopulatedMap
 
   def mark_seen
     @structure[@player.y - 3..@player.y + 3].each do |row|
-      row[@player.x - 3..@player.x + 3].each(&:mark_seen)
+      row[@player.x - 3..@player.x + 3].each { |square| square.seen = true }
     end
   end
 end

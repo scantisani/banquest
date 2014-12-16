@@ -9,34 +9,22 @@ class Floor < Square
     @item = nil
   end
 
-  attr_reader :occupant
+  attr_accessor :occupant
+  attr_accessor :item
 
   def occupy(actor)
     @occupant = actor
-    if actor
-      mark_seen if actor.is_a? Player
-    else
-      seen ? @symbol = @character : @symbol = ' '
-    end
-  end
-
-  def mark_seen
-    @seen = true
-    return @symbol = @character unless occupant
-    @symbol = @occupant.symbol
+    @seen = true if actor.is_a? Player
   end
 
   def occupied?
     !occupant.nil?
   end
 
-  def add_item(item)
-    @item = item
-    seen ? @symbol = @item.symbol : @symbol = ' '
-  end
-
-  def remove_item
-    @item = nil
-    seen ? @symbol = @character : @symbol = ' '
+  def symbol
+    return ' ' unless @seen
+    return @character unless @item || @occupant
+    return @item.symbol unless @occupant
+    @occupant.symbol
   end
 end
