@@ -11,22 +11,18 @@ class Display
   def redraw
     @map.redraw
     @info_panel.redraw
+
+    map_strings = @map.structure.collect { |row| row.collect(&:symbol).join }
+    panel_strings = @info_panel.contents
+    @screen = map_strings.zip(panel_strings)
   end
 
   def to_string
-    map_strings = @map.structure.collect { |row| row.collect(&:symbol).join }
-    panel_strings = @info_panel.contents
-    combined_array = map_strings.zip(panel_strings)
-
-    combined_array.map { |strings| strings.reduce(:concat) }.join("\n")
+    @screen.map { |strings| strings.reduce(:concat) }.join("\n")
   end
 
   def to_html
-    map_strings = @map.structure.map { |row| row.collect(&:symbol).join }
-    panel_strings = @info_panel.contents
-    combined_array = map_strings.zip(panel_strings)
-
-    html = combined_array.map { |strings| strings.reduce(:concat) }.join('<br>')
+    html = @screen.map { |strings| strings.reduce(:concat) }.join('<br>')
     html.gsub(' ', '&nbsp;')
   end
 end
