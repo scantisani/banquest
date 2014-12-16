@@ -16,6 +16,8 @@ class Main
   end
 
   def keypress(key)
+    return 'Game over!' if @player.hit_points == 0
+
     directions = { h: :west, j: :south, k: :north, l: :east,
                    y: :northwest, u: :northeast, b: :southwest,
                    n: :southeast }
