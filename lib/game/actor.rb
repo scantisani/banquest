@@ -23,7 +23,10 @@ class Actor
 
   def move(direction)
     position = potential_move(direction)
-    @x, @y = position[:x], position[:y] if position
+    return if position.nil?
+
+    new_x, new_y = position[:x], position[:y]
+    @x, @y = new_x, new_y unless @map.structure[new_y][new_x].occupied?
   end
 
   def potential_move(direction)

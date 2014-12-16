@@ -24,4 +24,8 @@ class Floor < Square
     return @symbol = @character unless occupant
     @symbol = @occupant.symbol
   end
+
+  def occupied?
+    !occupant.nil?
+  end
 end
