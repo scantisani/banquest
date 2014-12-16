@@ -1,14 +1,16 @@
 require_relative 'actor'
+require_relative 'coin'
 
 # Inhabitants of the dungeon that attack the player
 class Monster < Actor
   def initialize(map, data = { x: 0, y: 0, hit_points: 1 })
     super
     @player = map.player
+    @bounty = 1
   end
 
   def take_turn
-    return @alive = false if @hit_points <= 0
+    return die if @hit_points <= 0
     if next_to(@player)
       attack(@player)
     else
@@ -38,5 +40,10 @@ class Monster < Actor
     directions = [:north, :east, :south, :west,
                   :northeast, :southeast, :southwest, :northwest]
     move(directions.sample)
+  end
+
+  def die
+    @alive = false
+    @map.structure[@y][@x].item = Coin.new(@bounty)
   end
 end
