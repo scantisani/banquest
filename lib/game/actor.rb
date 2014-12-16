@@ -20,6 +20,7 @@ class Actor
   attr_reader :hit_points
   attr_reader :name
   attr_reader :combat_message
+  attr_reader :alive
 
   def move(direction)
     position = potential_move(direction)
@@ -46,7 +47,6 @@ class Actor
 
   def take_damage(damage)
     @hit_points -= damage
-    @alive = false if @hit_points <= 0
   end
 
   def next_to(actor)

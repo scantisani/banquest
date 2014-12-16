@@ -6,7 +6,7 @@ class MonsterGenerator
   def initialize(map, number_of_monsters)
     @map = map
     @monsters = Array.new(number_of_monsters) { generate_monster }
-    @monsters.each { |monster| @map.add_actor(monster) }
+    @map.monsters = @monsters
   end
 
   attr_reader :monsters

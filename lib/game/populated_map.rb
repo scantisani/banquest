@@ -9,18 +9,22 @@ class PopulatedMap
 
     @structure = Map.new(seed).structure
     @player = nil
-    @actors = []
+    @monsters = []
     load_seen(seen_squares) unless seen_squares.empty?
   end
 
   attr_accessor :structure
-  attr_reader :player
-  attr_reader :actors
+  attr_accessor :player
+  attr_accessor :monsters
 
-  def add_actor(actor)
-    @actors << actor
-    @player = actor if actor.is_a? Player
-    give_starting_position(actor)
+  def player=(new_player)
+    @player = new_player
+    give_starting_position(@player)
+  end
+
+  def monsters=(new_monsters)
+    @monsters = new_monsters
+    @monsters.each { |monster| give_starting_position(monster) }
   end
 
   def floor?(position)
@@ -50,7 +54,8 @@ class PopulatedMap
     end
     remove_dead
     # place occupants
-    @actors.each { |actor| place(actor) }
+    place(@player)
+    @monsters.each { |monster| place(monster) }
     mark_seen if @player
   end
 
@@ -84,5 +89,9 @@ class PopulatedMap
     @structure[@player.y - 3..@player.y + 3].each do |row|
       row[@player.x - 3..@player.x + 3].each { |square| square.seen = true }
     end
+  end
+
+  def remove_dead
+    @monsters.reject! { |monster| !monster.alive }
   end
 end

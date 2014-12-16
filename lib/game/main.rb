@@ -11,12 +11,12 @@ class Main
     @seed = seed
     @map = PopulatedMap.new(@seed)
     @player = Player.new(@map)
-    @monsters = MonsterGenerator.new(@map, 3).monsters
+    @map.monsters = MonsterGenerator.new(@map, 3).monsters
     @display = Display.new(@map)
   end
 
   def keypress(key)
-    return 'Game over!' if @player.hit_points == 0
+    return 'Game over!' if @player.hit_points <= 0
 
     directions = { h: :west, j: :south, k: :north, l: :east,
                    y: :northwest, u: :northeast, b: :southwest,
@@ -25,7 +25,7 @@ class Main
     direction = directions[key.to_sym]
     @player.move(direction) if direction
 
-    @monsters.each(&:take_turn)
+    @map.monsters.each(&:take_turn)
 
     @display.redraw
     @display.to_html
@@ -33,7 +33,7 @@ class Main
 
   def save_game
     data = { player_data: @player.save_data, seed: @seed,
-             monster_data: @monsters.map(&:save_data),
+             monster_data: @map.monsters.map(&:save_data),
              seen_squares: @map.save_seen }
     data.to_json
   end
@@ -43,9 +43,7 @@ class Main
     @seed = data[:seed]
     @map = PopulatedMap.new(@seed, data[:seen_squares])
     @player = Player.new(@map, data[:player_data])
-
-    @monsters = data[:monster_data].map { |datum| FruitBat.new(@map, datum) }
-    @monsters.each { |monster| @map.add_actor(monster) }
+    @map.monsters = data[:monster_data].map { |datum| FruitBat.new(@map, datum) }
 
     @display = Display.new(@map)
   end

@@ -8,6 +8,7 @@ class Monster < Actor
   end
 
   def take_turn
+    return @alive = false if @hit_points <= 0
     if next_to(@player)
       attack(@player)
     else

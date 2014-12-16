@@ -6,7 +6,7 @@ class Player < Actor
     super
     @symbol = '@'
     @damage_range = 1..6
-    @map.add_actor(self)
+    @map.player = self
   end
 
   def attack(actor)
@@ -15,8 +15,16 @@ class Player < Actor
                 "You chomp down on the #{actor.name}!",
                 "You bite the #{actor.name}!",
                 "You chew on the #{actor.name}.",
-                "You nibble on the #{actor.name}."]
-    @combat_message = messages.sample
+                "You nibble on the #{actor.name}.",
+                "You stuff a hunk of the #{actor.name} into your mouth.",
+                "You sink your teeth into the #{actor.name}!"]
+    return @combat_message = messages.sample if actor.hit_points > 0
+    kill_messages = ["You devour the #{actor.name} whole!",
+                     "You tear the #{actor.name} to shreds with your teeth!",
+                     "You eat the last morsel of the #{actor.name}.",
+                     "You reduce the #{actor.name} to bones and gristle.",
+                     "You slurp up the last of the #{actor.name}."]
+    @combat_message = kill_messages.sample
   end
 
   def move(direction)
