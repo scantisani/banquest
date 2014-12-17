@@ -70,11 +70,6 @@ class Actor
     { x: @x, y: @y, hit_points: @hit_points }
   end
 
-  def load_data(data)
-    @x, @y = data['x'], data['y']
-    @hit_points = data['hit_points']
-  end
-
   private
 
   def get_line(x0, y0, x1, y1)
