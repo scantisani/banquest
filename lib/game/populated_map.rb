@@ -32,18 +32,20 @@ class PopulatedMap
   end
 
   def save_seen
-    seen_squares = []
+    seen_squares = Array.new(MAP_SIZE) { Array.new(MAP_SIZE, 0) }
     @structure.each_with_index do |row, y|
       row.each_with_index do |square, x|
-        seen_squares << [x, y] if square.seen
+        seen_squares[y][x] = square.seen ? 1 : 0
       end
     end
     seen_squares
   end
 
   def load_seen(seen_squares)
-    seen_squares.each do |coordinates|
-      @structure[coordinates[1]][coordinates[0]].seen = true
+    seen_squares.each_with_index do |row, y|
+      row.each_with_index do |square, x|
+        @structure[y][x].seen = true if square == 1
+      end
     end
   end
 
