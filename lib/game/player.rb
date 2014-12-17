@@ -2,12 +2,14 @@ require_relative 'actor'
 
 # The player
 class Player < Actor
-  def initialize(map, data = { x: 0, y: 0, hit_points: 20, hunger: 100 })
+  def initialize(map, data = { x: 0, y: 0, hit_points: 20,
+                               hunger: 100, inventory: [] })
     super
     @symbol = '@'
     @damage_range = 1..6
     @map.player = self
     @hunger = data[:hunger]
+    @inventory = []
   end
 
   ATTACK_MESSAGES = ['You gnaw away at the NAME!',
@@ -46,14 +48,20 @@ class Player < Actor
   end
 
   def move(direction)
-    increase_hunger
+    snack
 
     position = potential_move(direction)
     return if position.nil?
 
     new_x, new_y = position[:x], position[:y]
-    return (@x, @y = new_x, new_y) unless @map.structure[new_y][new_x].occupied?
-    attack(@map.structure[new_y][new_x].occupant)
+
+    if @map.structure[new_y][new_x].occupied?
+      attack(@map.structure[new_y][new_x].occupant)
+    else
+      @x, @y = new_x, new_y
+    end
+
+    search_floor
   end
 
   def hunger_message
@@ -64,7 +72,16 @@ class Player < Actor
     { x: @x, y: @y, hit_points: @hit_points, hunger: @hunger }
   end
 
-  def increase_hunger
+  def snack
     @hunger -= 1 if @hunger > 0
+    @hit_points -= 1 if @hunger < 20
+  end
+
+  def search_floor
+    item = @map.structure[@y][@x].item
+    return if item.nil?
+    @inventory << item
+
+    @map.structure[@y][@x].item = nil
   end
 end
