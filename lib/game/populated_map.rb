@@ -83,12 +83,10 @@ class PopulatedMap
                     item_quantity: square.item.quantity }
       end
     end
-    puts items
     items
   end
 
   def load_items(items)
-    puts items
     return if items.empty?
     items.each do |item|
       item_class = Object.const_get(item[:item_class])
