@@ -13,4 +13,9 @@ class Item
     return @name + 's' unless @quantity == 1
     @name
   end
+
+  def save_data
+    { item_class: self.class.to_s,
+      item_quantity: @quantity }
+  end
 end

@@ -79,8 +79,7 @@ class PopulatedMap
       row.each_with_index do |square, x|
         next unless square.is_a? Floor
         next if square.item.nil?
-        items << { x: x, y: y, item_class: square.item.class.to_s,
-                    item_quantity: square.item.quantity }
+        items << { x: x, y: y }.merge(square.item.save_data)
       end
     end
     items
