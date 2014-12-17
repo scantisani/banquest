@@ -9,22 +9,28 @@ class Player < Actor
     @map.player = self
   end
 
+  ATTACK_MESSAGES = ['You gnaw away at the NAME!',
+                     'You chomp down on the NAME!',
+                     'You bite the NAME!',
+                     'You chew on the NAME.',
+                     'You nibble on the NAME.',
+                     'You stuff a hunk of the NAME into your mouth.',
+                     'You sink your teeth into the NAME!']
+
+  KILL_MESSAGES = ['You devour the NAME whole!',
+                   'You tear the NAME to shreds with your teeth!',
+                   'You eat the last morsel of the NAME.',
+                   'You reduce the NAME to bones and gristle.',
+                   'You slurp up the last of the NAME.']
+
   def attack(actor)
     super
-    messages = ["You gnaw away at the #{actor.name}!",
-                "You chomp down on the #{actor.name}!",
-                "You bite the #{actor.name}!",
-                "You chew on the #{actor.name}.",
-                "You nibble on the #{actor.name}.",
-                "You stuff a hunk of the #{actor.name} into your mouth.",
-                "You sink your teeth into the #{actor.name}!"]
-    return @combat_message = messages.sample if actor.hit_points > 0
-    kill_messages = ["You devour the #{actor.name} whole!",
-                     "You tear the #{actor.name} to shreds with your teeth!",
-                     "You eat the last morsel of the #{actor.name}.",
-                     "You reduce the #{actor.name} to bones and gristle.",
-                     "You slurp up the last of the #{actor.name}."]
-    @combat_message = kill_messages.sample
+    if actor.hit_points > 0
+      @combat_message = ATTACK_MESSAGES.sample
+    else
+      @combat_message = KILL_MESSAGES.sample
+    end
+    @combat_message.sub!(/NAME/, actor.name)
   end
 
   def move(direction)
