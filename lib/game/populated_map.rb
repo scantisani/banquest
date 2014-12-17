@@ -1,5 +1,6 @@
 require_relative 'map'
 require_relative 'player'
+require_relative 'coin'
 
 # The dungeon map occupied by the player as well as monsters.
 class PopulatedMap
@@ -70,6 +71,30 @@ class PopulatedMap
     rows = @structure.collect { |row| row.collect(&:symbol).join }
     html = rows.join('<br>')
     html.gsub(' ', '&nbsp;')
+  end
+
+  def save_items
+    items = []
+    @structure.each_with_index do |row, y|
+      row.each_with_index do |square, x|
+        next unless square.is_a? Floor
+        next if square.item.nil?
+        items << { x: x, y: y, item_class: square.item.class.to_s,
+                    item_quantity: square.item.quantity }
+      end
+    end
+    puts items
+    items
+  end
+
+  def load_items(items)
+    puts items
+    return if items.empty?
+    items.each do |item|
+      item_class = Object.const_get(item[:item_class])
+      quantity = item[:item_quantity]
+      @structure[item[:y]][item[:x]].item = item_class.new(quantity)
+    end
   end
 
   private

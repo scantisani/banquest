@@ -34,6 +34,7 @@ class Main
   def save_game
     data = { player_data: @player.save_data, seed: @seed,
              monster_data: @map.monsters.map(&:save_data),
+             items: @map.save_items,
              seen_squares: @map.save_seen }
     data.to_json
   end
@@ -44,6 +45,7 @@ class Main
     @map = PopulatedMap.new(@seed, data[:seen_squares])
     @player = Player.new(@map, data[:player_data])
     @map.monsters = data[:monster_data].map { |datum| FruitBat.new(@map, datum) }
+    @map.load_items(data[:items])
 
     @display = Display.new(@map)
   end
