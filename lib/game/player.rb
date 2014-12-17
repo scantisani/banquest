@@ -9,8 +9,10 @@ class Player < Actor
     @damage_range = 1..6
     @map.player = self
     @hunger = data[:hunger]
-    @inventory = []
+    @inventory = load_items(data[:inventory])
   end
+
+  attr_reader :inventory
 
   ATTACK_MESSAGES = ['You gnaw away at the NAME!',
                      'You chomp down on the NAME!',
@@ -69,7 +71,8 @@ class Player < Actor
   end
 
   def save_data
-    { x: @x, y: @y, hit_points: @hit_points, hunger: @hunger }
+    { x: @x, y: @y, hit_points: @hit_points, hunger: @hunger,
+      inventory: @inventory.map(&:save_data) }
   end
 
   def snack
@@ -83,5 +86,15 @@ class Player < Actor
     @inventory << item
 
     @map.structure[@y][@x].item = nil
+  end
+
+  def load_items(items)
+    inventory = []
+    items.each do |item|
+      item_class = Object.const_get(item[:item_class])
+      quantity = item[:item_quantity]
+      inventory << item_class.new(quantity)
+    end
+    inventory
   end
 end
