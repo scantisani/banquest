@@ -8,6 +8,7 @@ class FruitBat < Monster
     @damage_range = 1..3
     @sight = 4
     @name = 'fruit bat'
+    @bounty = 15
   end
 
   def attack(actor)
