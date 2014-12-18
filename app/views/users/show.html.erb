@@ -1,6 +1,6 @@
-<% @user.runs.each do |run| %>
+<% @user.runs.each_with_index do |run, i| %>
   <% next if run.map == 'Game over!' %>
-  <%= link_to "In-progress run (ID: #{run.id})", user_run_url(@user, run) %><br>
+  <%= link_to "In-progress run (#{i})", user_run_url(@user, run) %><br>
 <% end %>
 
 <%= form_for ([@user, @user.runs.build]) do |f| %>
