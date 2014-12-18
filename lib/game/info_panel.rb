@@ -18,7 +18,12 @@ class InfoPanel
                      ['|' + '-' * 39] +
                      ['| STATUS'] +
                      ['|' + '-' * 39] +
-                     Array.new(19) { '|' + (' ' * 39) }
+                     Array.new(5) { '|' + (' ' * 39) } +
+                     ['| h, j, k and l to move left, down, up and right.'] +
+                     ['| y, u, b, and n move diagonally.'] +
+                     ['| Moving will automatically attack and pick up items.'] +
+                     ['| Your progress is saved automatically.'] +
+                     Array.new(10) { '|' + (' ' * 39) }
 
   attr_reader :contents
 
