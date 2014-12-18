@@ -1,11 +1,6 @@
 class WelcomeController < ApplicationController
   def index
-    @user = User.new
-  end
-
-  def search
-    @user = User.where(name: params[:name])
-
-    redirect_to @user
+    @user = User.where(name: params[:name])[0]
+    redirect_to user_path(@user.id) if @user
   end
 end
