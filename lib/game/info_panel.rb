@@ -25,6 +25,7 @@ class InfoPanel
   def redraw
     @contents = DEFAULT_CONTENTS.dup
 
+    return unless @player
     draw_inventory
     draw_status_messages
     draw_combat_messages
