@@ -1,0 +1,7 @@
+<% @user.runs.each do |run| %>
+  <%= link_to "Previous run (ID: #{run.id})", user_run_url(@user, run) %><br>
+<% end %>
+
+<%= form_for ([@user, @user.runs.build]) do |f| %>
+  <%= f.submit %>
+<% end %>

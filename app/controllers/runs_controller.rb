@@ -7,12 +7,14 @@ class RunsController < ApplicationController
   end
 
   def create
-    @run = Run.new
+    @user = User.find(params[:user_id])
+    @run = @user.runs.create
+
     @game = Main.new
     @run.save_data = @game.save_game
     @run.save
 
-    redirect_to @run
+    redirect_to user_run_path(@user, @run)
   end
 
   def show
@@ -34,11 +36,5 @@ class RunsController < ApplicationController
       format.html
       format.json { render json: @run }
     end
-  end
-
-  private
-
-  def game_params
-    params.require(:run).permit(:keypress, :save_data)
   end
 end
