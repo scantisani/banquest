@@ -61,7 +61,8 @@ class PopulatedMap
     remove_dead
 
     # place occupants
-    return @monsters.each { |monster| place(monster) } unless @player
+    @monsters.each { |monster| place(monster) }
+    return unless @player
     place(@player)
     mark_seen if @player
   end
