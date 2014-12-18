@@ -33,7 +33,10 @@ class PopulatedMap
   end
 
   def save_seen
+    # returns a 40 x 40 array with each element corresponding to a square
+    # 1 for seen, 0 for not--by default, none are seen
     seen_squares = Array.new(MAP_SIZE) { Array.new(MAP_SIZE, 0) }
+
     @structure.each_with_index do |row, y|
       row.each_with_index do |square, x|
         seen_squares[y][x] = square.seen ? 1 : 0
@@ -56,6 +59,7 @@ class PopulatedMap
       row.each { |square| square.occupant = nil if square.is_a? Floor }
     end
     remove_dead
+
     # place occupants
     place(@player)
     @monsters.each { |monster| place(monster) }
@@ -70,6 +74,9 @@ class PopulatedMap
   def to_html
     rows = @structure.collect { |row| row.collect(&:symbol).join }
     html = rows.join('<br>')
+
+    # we need to replace regular spaces with non-breaking ones
+    # so that repeated spaces aren't condensed into one in HTML
     html.gsub(' ', '&nbsp;')
   end
 
@@ -88,8 +95,11 @@ class PopulatedMap
   def load_items(items)
     return if items.empty?
     items.each do |item|
+      # Object.const_get converts a class name string to a plain class
+      # name that we can use to make an instance of that class
       item_class = Object.const_get(item[:item_class])
       quantity = item[:item_quantity]
+
       @structure[item[:y]][item[:x]].item = item_class.new(quantity)
     end
   end
