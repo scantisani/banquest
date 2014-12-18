@@ -1,9 +1,10 @@
 require_relative 'actor'
+require_relative 'coin'
 
 # The player
 class Player < Actor
   def initialize(map, data = { x: 0, y: 0, hit_points: 20,
-                               hunger: 100, inventory: [] })
+                               hunger: 100, inventory: [Coin.new(0).save_data] })
     super
     @symbol = '@'
     @damage_range = 1..6
@@ -83,8 +84,9 @@ class Player < Actor
   def search_floor
     item = @map.structure[@y][@x].item
     return if item.nil?
-    @inventory << item
 
+    # Coins are always the 0th element of the inventory array
+    item.is_a?(Coin) ? @inventory[0].quantity += item.quantity : @inventory << item
     @map.structure[@y][@x].item = nil
   end
 
