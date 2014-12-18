@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218052437) do
+ActiveRecord::Schema.define(version: 20141218091104) do
 
   create_table "runs", force: true do |t|
     t.string   "keypress"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20141218052437) do
     t.datetime "updated_at"
     t.text     "save_data"
     t.integer  "user_id"
+    t.integer  "score"
   end
 
   add_index "runs", ["user_id"], name: "index_runs_on_user_id"
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141218052437) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "best_score"
   end
 
 end

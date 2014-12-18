@@ -1,0 +1,15 @@
+<h1>Leaderboard</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Best Score</th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.best_score %></td>
+    </tr>
+  <% end %>
+</table>

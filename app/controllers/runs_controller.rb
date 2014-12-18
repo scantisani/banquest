@@ -19,9 +19,11 @@ class RunsController < ApplicationController
 
   def show
     @run = Run.find(params[:id])
+    @user = User.find(params[:user_id])
   end
 
   def update
+    @user = User.find(params[:user_id])
     @run = Run.find(params[:id])
 
     @game = Main.new
@@ -29,8 +31,13 @@ class RunsController < ApplicationController
 
     @run.update(
         map: @game.keypress(params[:keypress]),
-        save_data: @game.save_game)
+        save_data: @game.save_game, score: @game.score)
     @run.save
+
+    if @run.map == 'Game over!'
+      @user.best_score = [@user.best_score, @run.score].max
+      @user.save
+    end
 
     respond_to do |format|
       format.html

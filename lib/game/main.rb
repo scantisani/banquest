@@ -49,4 +49,9 @@ class Main
 
     @display = Display.new(@map)
   end
+
+  def score
+    coins = @player.inventory[0]
+    coins.quantity
+  end
 end
