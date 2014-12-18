@@ -3,7 +3,7 @@ require_relative '../lib/game/monsters/monster.rb'
 require_relative '../lib/game/populated_map.rb'
 
 # Unit tests for monster.rb
-class MonsterTest < Test::Unit::TestCase
+class TestMonster < Test::Unit::TestCase
   def setup
     @map = PopulatedMap.new(Random.rand(9999))
     @control = Monster.new(@map)

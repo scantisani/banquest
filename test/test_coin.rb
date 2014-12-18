@@ -2,7 +2,7 @@ require 'test/unit'
 require_relative '../lib/game/coin.rb'
 
 # Unit tests for coin.rb
-class CoinTest < Test::Unit::TestCase
+class TestCoin < Test::Unit::TestCase
   def test_pluralize
     single = Coin.new(1)
     none = Coin.new(0)

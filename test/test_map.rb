@@ -2,7 +2,7 @@ require 'test/unit'
 require_relative '../lib/game/map.rb'
 
 # Unit tests for map.rb
-class MapTest < Test::Unit::TestCase
+class TestMap < Test::Unit::TestCase
   def test_outer_walls
     map = Map.new(Random.rand(9999))
 
