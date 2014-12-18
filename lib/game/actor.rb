@@ -3,7 +3,7 @@ class Actor
   def initialize(map, data = { x: 0, y: 0, hit_points: 1 })
     @x = data[:x]
     @y = data[:y]
-    @symbol = ''
+    @symbol = '' # which ASCII character the actor is displayed as on the map
     @map = map
     @name = ''
     @combat_message = nil
@@ -31,6 +31,8 @@ class Actor
   end
 
   def potential_move(direction)
+    # evaluates whether a square can be moved to
+    # returns the coordinates of the square as a hash if yes, nil if no
     compass = {
       north: [0, -1], east: [1, 0], south: [0, 1], west: [-1, 0],
       northeast: [1, -1], southeast: [1, 1], southwest: [-1, 1],
@@ -56,6 +58,8 @@ class Actor
   end
 
   def sees(place)
+    # draws a line from the actor's square to the place, then evaluates each
+    # square along that line. if any square is a wall, it returns false
     return false unless euclidean_distance(@x, @y, place[:x], place[:y]) <= @sight
 
     line_of_sight = get_line(@x, @y, place[:x], place[:y])
@@ -74,6 +78,7 @@ class Actor
 
   def get_line(x0, y0, x1, y1)
     # (slightly modified) Bresenham algorithm taken from RogueBasin
+    # credit to (I think) contributor JohnDoe
     points = []
 
     steep = ((y1 - y0).abs) > ((x1 - x0).abs)
